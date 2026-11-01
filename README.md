@@ -9,7 +9,7 @@
 [![Audio](https://img.shields.io/badge/audio-local%20%7C%20native-15a588)](#privacy)
 [![Status](https://img.shields.io/badge/status-early%20prototype-f0ad4e)](#what-works-and-what-needs-work)
 
-<img src="assets/omni-local.png" alt="Omni Local Windows voice client connected to a local LFM3 Omni server" width="900">
+<img src="omni-local.png" alt="Omni Local Windows voice client connected to a local LFM3 Omni server" width="900">
 
 *A working prototype, with plenty of room for a visual polish pass.*
 
