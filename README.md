@@ -2,9 +2,10 @@
 
 # Omni Local
 
-**Push to talk with a local LFM3 Omni model.** A small Windows desktop experiment for native voice on llama.cpp.
+**Push to talk with a local LFM3 Omni model.** A small desktop experiment for native voice on llama.cpp, targeting Windows and Linux.
 
-[![Windows](https://img.shields.io/badge/platform-Windows%2010%2B-0078D4?logo=windows)](#quick-start)
+[![Windows and Linux](https://img.shields.io/badge/platform-Windows%20%7C%20Linux-0078D4)](#quick-start)
+[![CI and releases](https://github.com/NotCherry/omni-local/actions/workflows/ci-release.yml/badge.svg)](https://github.com/NotCherry/omni-local/actions/workflows/ci-release.yml)
 [![Python](https://img.shields.io/badge/Python-3.10%E2%80%933.12-3776AB?logo=python&logoColor=white)](#run-from-source)
 [![Audio](https://img.shields.io/badge/audio-local%20%7C%20native-15a588)](#privacy)
 [![Status](https://img.shields.io/badge/status-early%20prototype-f0ad4e)](#what-works-and-what-needs-work)
@@ -21,9 +22,9 @@ This project is an **early prototype**. Native audio has been verified with a re
 
 ## Quick start
 
-### The Windows one-file app
+### Download a release
 
-1. Download `OmniLocal.exe` from a [GitHub release](https://github.com/NotCherry/omni-local/releases) when one is available. The executable bundles the GUI and audio-client dependencies, not the language model or llama.cpp server.
+1. Download the Windows ZIP or Linux tarball from [GitHub Releases](https://github.com/NotCherry/omni-local/releases) when one is available. Each package includes the app and a copy of this README. The app does not include the language model or llama.cpp server.
 2. Install a current [llama.cpp build with LFM3 Omni realtime support](https://github.com/ggml-org/llama.cpp). Put the matching Omni GGUF and audio projector somewhere on your computer.
 3. Start the server with both local model files. For example, in PowerShell:
 
@@ -34,7 +35,9 @@ This project is an **early prototype**. Native audio has been verified with a re
    ```
 
    The projector quantization should match your model distribution. Do not use an unrelated model's projector. The server should advertise native audio input and output in `/v1/models`.
-4. Open Omni Local, select that server address, choose your microphone and speakers, and click **Connect**. Hold **Hold to talk** or Space while focused; release to send. Headphones help avoid speaker-to-mic feedback.
+4. Start Omni Local, select that server address, choose your microphone and speakers, and click **Connect**. Hold **Hold to talk** or Space while focused; release to send. Headphones help avoid speaker-to-mic feedback.
+
+On Linux, use a desktop session with Tk support and install the system audio libraries required by PortAudio (for example, `libportaudio2` and ALSA). The release executable is built for 64-bit Ubuntu 24.04 and may need equivalent libraries on other distributions.
 
 The GUI currently reads an optional `settings.json` next to its source files or in an `OmniLocal` folder beside the executable. This file can set the server URL, model name, device-name preferences, and local server file paths. It contains machine-specific paths and is deliberately excluded from the repository.
 
@@ -93,6 +96,19 @@ python .\app.py --smoke-test
 ```
 
 Tests use a local mock WebSocket server and fake audio streams. They do not benchmark GPU speed or verify real conversational accuracy. See [`test_client.py`](test_client.py) for coverage.
+
+### CI and automatic releases
+
+The CI workflow runs unit tests and a GUI startup smoke check on Windows and Ubuntu. Pushing a version tag such as `v0.1.0` runs those checks, builds a Windows ZIP and Linux tarball, then publishes both as assets on a GitHub Release. To publish, push a tag from a commit on `main`:
+
+```bash
+git switch main
+git pull
+git tag v0.1.0
+git push origin v0.1.0
+```
+
+See the [Actions page](https://github.com/NotCherry/omni-local/actions) for build status and logs. Linux builds target Ubuntu 24.04 x64; Windows builds target x64 Windows. Releases are created only after both platform checks and builds succeed.
 
 ## License
 
