@@ -2,6 +2,7 @@ import base64
 import json
 import queue
 import subprocess
+import sys
 import tempfile
 import threading
 import time
@@ -215,6 +216,7 @@ class SocketTests(unittest.TestCase):
                 self.assertFalse(c.capture)
             server.shutdown()
 
+@unittest.skipUnless(sys.platform == 'win32', 'Windows PowerShell startup scripts only run on Windows')
 class WindowsScriptsTests(unittest.TestCase):
     def test_managed_llama_command_and_missing_projector(self):
         with tempfile.TemporaryDirectory(prefix='managed voice ') as folder:
